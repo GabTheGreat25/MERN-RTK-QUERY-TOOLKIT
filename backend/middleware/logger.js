@@ -3,7 +3,6 @@ const { v4: uuid } = require("uuid");
 const fs = require("fs");
 const fsPromises = require("fs").promises;
 const path = require("path");
-
 const LOGS_DIR = path.join(__dirname, "..", "logs");
 
 /**
@@ -28,9 +27,7 @@ const logEvents = async (message, logFileName) => {
 
   try {
     // Create the logs directory if it doesn't exist
-    if (!fs.existsSync(LOGS_DIR)) {
-      await fsPromises.mkdir(LOGS_DIR);
-    }
+    if (!fs.existsSync(LOGS_DIR)) await fsPromises.mkdir(LOGS_DIR);
 
     // Append the log item to the log file
     await fsPromises.appendFile(path.join(LOGS_DIR, logFileName), logItem);

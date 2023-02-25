@@ -1,15 +1,21 @@
-/**
- * Module dependencies.
- */
+// Load environment variables from .env file
+require("dotenv").config({ path: "./config/.env" });
+
 const express = require("express"); // Import the 'express' module
 const app = express(); // Create a new express application
 const path = require("path"); // Import the 'path' module
-const { logger } = require("./middleware/logger");
-const errorHandler = require("./middleware/errorHandler");
+const { logger } = require("./middleware/logger"); // Import custom logger middleware
+const errorHandler = require("./middleware/errorHandler"); // Import custom error handler middleware
 const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const corsOptions = require("./config/corsOption");
+const cors = require("cors"); // Import the 'cors' module
+const corsOptions = require("./config/corsOption"); // Import CORS options
+const connectDB = require("./config/db"); // Import database connection configuration
+const mongoose = require("mongoose"); // Import Mongoose
+const { logEvents } = require("./middleware/logger"); // Import logging function
 const PORT = process.env.PORT || 3500; // Set the server port to 3500 or the value of the PORT environment variable
+
+connectDB();
+
 // Set up middleware
 app.use(logger);
 app.use(cors(corsOptions));
@@ -65,4 +71,15 @@ app.all("*", (req, res) => {
 app.use(errorHandler);
 
 // Start the server and listen on the specified port
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+mongoose.connection.once("open", () => {
+  console.log("Connected to MongoDB");
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+});
+
+mongoose.connection.on("error", (err) => {
+  console.log(err);
+  logEvents(
+    `${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`,
+    "mongoErrLog.log"
+  );
+});

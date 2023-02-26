@@ -1,0 +1,192 @@
+{
+	"info": {
+		"_postman_id": "8cc04544-df09-4c7c-a19f-4b7848733b4a",
+		"name": "MERN-BEST-PRACTICES",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19567688"
+	},
+	"item": [
+		{
+			"name": "USERS",
+			"item": [
+				{
+					"name": "GET ALL USERS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}{{V1}}users",
+							"host": [
+								"{{URI}}{{V1}}users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE A USER",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Crislhan\",\r\n    \"password\": \"123456\",\r\n    \"roles\": [\"Employee\"]\r\n}"
+						},
+						"url": {
+							"raw": "{{URI}}{{V1}}users",
+							"host": [
+								"{{URI}}{{V1}}users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE A USER",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"id\": \"63fae5f0cfbeaf206b2fb5c0\",\r\n        \"username\": \"Gabz\",\r\n        \"roles\": [\r\n            \"Employee\"\r\n        ],\r\n        \"active\": false\r\n    }"
+						},
+						"url": {
+							"raw": "{{URI}}{{V1}}users",
+							"host": [
+								"{{URI}}{{V1}}users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE A USER",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"id\": \"63fae68250ca63246f6e27bd\",\r\n        \"username\": \"Crislhan\",\r\n        \"roles\": [\r\n            \"Employee\"\r\n        ],\r\n        \"active\": true,\r\n        \"__v\": 0\r\n    }"
+						},
+						"url": {
+							"raw": "{{URI}}{{V1}}users",
+							"host": [
+								"{{URI}}{{V1}}users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "NOTES",
+			"item": [
+				{
+					"name": "GET ALL NOTES",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}{{V1}}notes",
+							"host": [
+								"{{URI}}{{V1}}notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE A NOTE",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user\": \"63fae5f0cfbeaf206b2fb5c0\",\r\n    \"title\": \"Asus\",\r\n    \"text\": \"Coding Is Life\"\r\n}"
+						},
+						"url": {
+							"raw": "{{URI}}{{V1}}notes",
+							"host": [
+								"{{URI}}{{V1}}notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE A NOTE",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"63faef8d44de8850a3171299\",\r\n    \"user\": \"63fae5f0cfbeaf206b2fb5c0\",\r\n    \"title\": \"Asus\",\r\n    \"text\": \"Coding Is Life\",\r\n    \"completed\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{URI}}{{V1}}notes",
+							"host": [
+								"{{URI}}{{V1}}notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE A NOTE",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"63faef8d44de8850a3171299\",\r\n    \"user\": \"63fae5f0cfbeaf206b2fb5c0\",\r\n    \"title\": \"Asus\",\r\n    \"text\": \"Coding Is Life\",\r\n    \"completed\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{URI}}{{V1}}notes",
+							"host": [
+								"{{URI}}{{V1}}notes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

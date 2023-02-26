@@ -29,6 +29,12 @@ app.use("/", express.static(path.join(__dirname, "public")));
 // Handle GET requests to the root URL with the 'root' router
 app.use("/", require("./routes/root"));
 
+// Mounting userRoutes to handle API requests related to users
+app.use("/api/v1/users", require("./routes/userRoutes"));
+
+// Mounting notesRoutes to handle API requests related to notes
+app.use("/api/v1/notes", require("./routes/notesRoutes"));
+
 // Handle all other requests with a 404 response
 app.all("*", (req, res) => {
   res.status(404); // Set the HTTP status code to 404

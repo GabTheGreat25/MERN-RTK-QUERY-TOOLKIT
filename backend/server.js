@@ -12,7 +12,7 @@ const corsOptions = require("./config/corsOption"); // Import CORS options
 const connectDB = require("./config/db"); // Import database connection configuration
 const mongoose = require("mongoose"); // Import Mongoose
 const { logEvents } = require("./middleware/logger"); // Import logging function
-const PORT = process.env.PORT || 3500; // Set the server port to 3500 or the value of the PORT environment variable
+const PORT = process.env.PORT || 4000; // Set the server port to 4000 or the value of the PORT environment variable
 
 connectDB();
 

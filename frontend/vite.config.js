@@ -11,6 +11,10 @@ export default defineConfig({
       "@": srcPath,
       "@components": `${srcPath}/components`,
       "@features": `${srcPath}/features`,
+      "@api": `${srcPath}/app/api`,
     },
+  },
+  server: {
+    port: 3000, // Set the port number to 3000
   },
 });

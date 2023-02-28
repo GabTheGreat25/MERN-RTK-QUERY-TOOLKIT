@@ -2,13 +2,18 @@ import { Link } from "react-router-dom";
 
 const Welcome = () => {
   const date = new Date();
-  const philippineTimezone = "Asia/Manila";
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    timeZone: "Asia/Manila",
+  };
 
-  const formatter = new Intl.DateTimeFormat("en-US", {
-    dateStyle: "full",
-    timeStyle: "long",
-    timeZone: philippineTimezone,
-  });
+  const formatter = new Intl.DateTimeFormat("en-US", options);
 
   const today = formatter.format(date);
 
@@ -30,4 +35,5 @@ const Welcome = () => {
 
   return content;
 };
+
 export default Welcome;

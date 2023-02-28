@@ -1,0 +1,10 @@
+export default {
+  NOTE: "Note",
+  USER: "User",
+  LIST: "List",
+  HTTP_STATUS_OK: 200,
+  TIMEOUT_SECONDS: 5,
+  SORT_EQUAL: 0,
+  SORT_FIRST_BEFORE_SECOND: -1,
+  SORT_FIRST_AFTER_SECOND: 1,
+};

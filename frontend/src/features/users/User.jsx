@@ -18,7 +18,7 @@ const User = ({ userId }) => {
     // Define a function for handling the edit button click
     const handleEdit = () => {
       // Use the navigate function to go to the edit page for the current user
-      navigate(`/api/v1/dash/users/${userId}`);
+      navigate(`/dash/users/${userId}`);
     };
 
     // Convert the user's roles array to a string with comma-separated values

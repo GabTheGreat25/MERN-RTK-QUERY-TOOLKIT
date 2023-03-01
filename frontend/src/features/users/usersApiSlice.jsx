@@ -19,13 +19,11 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     // create a getUsers query endpoint
     getUsers: builder.query({
       // specify the endpoint url for the getUsers query
-      query: () => "/api/v1/users",
+      query: () => RESOURCE.USER_URL,
       // validate the status of the response to ensure it is successful and not an error
       validateStatus: (response, result) => {
         return response.status === RESOURCE.HTTP_STATUS_OK && !result.isError;
       },
-      // keep the unused data for 5 seconds before it's garbage collected
-      keepUnusedDataFor: RESOURCE.TIMEOUT_SECONDS,
       // transform the response data by normalizing the data using the usersAdapter
       transformResponse: (responseData) => {
         const loadedUsers = responseData.map((user) => {
@@ -42,17 +40,52 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             { type: RESOURCE.USER, id: RESOURCE.LIST }, //! Handling multiple users return
             ...result.ids.map((id) => ({ type: RESOURCE.USER, id })),
           ];
-        } else {
-          //! Handling single user return
-          return [{ type: "User", id: "LIST" }];
         }
+        //! Handling single user return
+        else return [{ type: RESOURCE.USER, id: RESOURCE.LIST }];
       },
+    }),
+    addNewUser: builder.mutation({
+      query: (initialUserData) => ({
+        url: RESOURCE.USER_URL,
+        method: "POST",
+        body: {
+          ...initialUserData,
+        },
+      }),
+      invalidatesTags: [{ type: RESOURCE.USER, id: RESOURCE.LIST }],
+    }),
+    updateUser: builder.mutation({
+      query: (initialUserData) => ({
+        url: RESOURCE.USER_URL,
+        method: "PATCH",
+        body: {
+          ...initialUserData,
+        },
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: RESOURCE.USER, id: arg.id },
+      ],
+    }),
+    deleteUser: builder.mutation({
+      query: ({ id }) => ({
+        url: RESOURCE.USER_URL,
+        method: "DELETE",
+        body: { id },
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: RESOURCE.USER, id: arg.id },
+      ],
     }),
   }),
 });
 
-// create a custom hook for the getUsers query
-export const { useGetUsersQuery } = usersApiSlice;
+export const {
+  useGetUsersQuery,
+  useAddNewUserMutation,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
+} = usersApiSlice;
 
 // This selector uses the `select` function to get the query result object for the `getUsers` endpoint.
 // The query result object contains data, error, isLoading, isFetching, and other properties related to the query.

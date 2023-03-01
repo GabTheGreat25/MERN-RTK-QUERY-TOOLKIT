@@ -9,7 +9,11 @@ const UsersList = () => {
     isSuccess, // `isSuccess` is true if the query succeeds
     isError, // `isError` is true if the query fails
     error, // `error` contains the error object if the query fails
-  } = useGetUsersQuery();
+  } = useGetUsersQuery(undefined, {
+    pollingInterval: 60000,
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true,
+  });
 
   let content;
 

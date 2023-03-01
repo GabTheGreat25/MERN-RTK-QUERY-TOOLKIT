@@ -32,7 +32,7 @@ const Note = ({ noteId }) => {
     const updated = new Date(note.updatedAt).toLocaleString("en-US", options);
 
     // Define a handleEdit function that navigates to the edit page for the note
-    const handleEdit = () => navigate(`/api/v1/dash/notes/${noteId}`);
+    const handleEdit = () => navigate(`/dash/notes/${noteId}`);
 
     // Render a table row with the note's status, creation date, update date, title, and author
     // Also include an edit button that calls the handleEdit function on click

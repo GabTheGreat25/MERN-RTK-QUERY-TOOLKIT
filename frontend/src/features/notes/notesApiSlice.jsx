@@ -21,7 +21,7 @@ export const notesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getNotes: builder.query({
       // define the endpoint URL for the `getNotes` query
-      query: () => "/api/v1/notes",
+      query: () => RESOURCE.NOTE_URL,
       // define a custom response validation function
       validateStatus: (response, result) => {
         return response.status === RESOURCE.HTTP_STATUS_OK && !result.isError;
@@ -46,17 +46,52 @@ export const notesApiSlice = apiSlice.injectEndpoints({
             { type: RESOURCE.NOTE, id: RESOURCE.LIST },
             ...result.ids.map((id) => ({ type: RESOURCE.NOTE, id })),
           ];
-        } else {
-          // create a tag for the entire list of notes
-          return [{ type: RESOURCE.NOTE, id: RESOURCE.LIST }];
         }
+        // create a tag for the entire list of notes
+        else return [{ type: RESOURCE.NOTE, id: RESOURCE.LIST }];
       },
+    }),
+    addNewNote: builder.mutation({
+      query: (initialNote) => ({
+        url: RESOURCE.NOTE_URL,
+        method: "POST",
+        body: {
+          ...initialNote,
+        },
+      }),
+      invalidatesTags: [{ type: RESOURCE.NOTE, id: RESOURCE.LIST }],
+    }),
+    updateNote: builder.mutation({
+      query: (initialNote) => ({
+        url: RESOURCE.NOTE_URL,
+        method: "PATCH",
+        body: {
+          ...initialNote,
+        },
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: RESOURCE.NOTE, id: arg.id },
+      ],
+    }),
+    deleteNote: builder.mutation({
+      query: ({ id }) => ({
+        url: RESOURCE.NOTE_URL,
+        method: "DELETE",
+        body: { id },
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: RESOURCE.NOTE, id: arg.id },
+      ],
     }),
   }),
 });
 
-// create a `useGetNotesQuery` hook to use the `getNotes` endpoint
-export const { useGetNotesQuery } = notesApiSlice;
+export const {
+  useGetNotesQuery,
+  useAddNewNoteMutation,
+  useUpdateNoteMutation,
+  useDeleteNoteMutation,
+} = notesApiSlice;
 
 // create a memoized selector to select the result object of the `getNotes` query
 export const selectNotesResult = notesApiSlice.endpoints.getNotes.select();

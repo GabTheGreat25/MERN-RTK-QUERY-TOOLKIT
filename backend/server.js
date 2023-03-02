@@ -29,6 +29,9 @@ app.use("/", express.static(path.join(__dirname, "public")));
 // Handle GET requests to the root URL with the 'root' router
 app.use("/", require("./routes/root"));
 
+// Mount the authentication routes at the /api/v1/auth endpoint
+app.use("/api/v1/auth", require("./routes/authRoutes"));
+
 // Mounting userRoutes to handle API requests related to users
 app.use("/api/v1/users", require("./routes/userRoutes"));
 

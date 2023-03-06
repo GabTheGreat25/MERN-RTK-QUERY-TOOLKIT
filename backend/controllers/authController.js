@@ -36,14 +36,14 @@ const login = asyncHandler(async (req, res) => {
       },
     },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "15m" }
+    { expiresIn: "5s" }
   );
 
   // Generate another JWT, which will be used to refresh the access token once it expires. This token contains only the `username` field and expires in 7 days.
   const refreshToken = jwt.sign(
     { username: foundUser.username },
     process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: "7d" }
+    { expiresIn: "5s" }
   );
 
   // Create a secure cookie that contains the refresh token. The cookie is set to be accessible only by the server, over HTTPS, and with a `sameSite` attribute of `None`. The cookie expires after 7 days, which matches the expiry time of the refresh token.
@@ -102,7 +102,7 @@ const refresh = (req, res) => {
           },
         },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: "15m" }
+        { expiresIn: "5s" }
       );
 
       // Send the new access token as a response
@@ -115,16 +115,10 @@ const refresh = (req, res) => {
 // @route POST /auth/logout
 // @access Public - just to clear cookie if exists
 const logout = (req, res) => {
-  // Get the cookies from the request
-  const cookies = req.cookie;
-
-  // If no JWT cookie is found, send a "No Content" response
+  const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(204); //No content
-
   // Clear the JWT cookie by setting it to empty with an expiry in the past
   res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
-
-  // Send a response indicating that the cookie has been cleared
   res.json({ message: "Cookie cleared" });
 };
 

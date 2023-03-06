@@ -10,7 +10,7 @@ const NotesList = () => {
     isSuccess, // Success state for when the request is completed successfully
     isError, // Error state for when the request encounters an error
     error, // Error object containing the error message and status code
-  } = useGetNotesQuery(undefined, {
+  } = useGetNotesQuery("notesList", {
     pollingInterval: 60000, // the interval (in milliseconds) to poll for new data from the server
     refetchOnFocus: true, // whether to refetch data from the server when the window is focused
     refetchOnMountOrArgChange: true, // whether to refetch data from the server when the component mounts or when the query arguments change

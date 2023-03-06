@@ -14,19 +14,20 @@ export const authApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     sendLogout: builder.mutation({
-      // Define a sendLogout endpoint mutation.
       query: () => ({
-        url: "/api/v1/auth/logout", // Set the URL for the sendLogout endpoint.
-        method: "POST", // Set the HTTP method for the sendLogout endpoint.
+        url: "/api/v1/auth/logout",
+        method: "POST",
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        // Define an onQueryStarted function to handle the query lifecycle events.
         try {
-          await queryFulfilled; // Wait for the query to complete successfully.
-          dispatch(logOut()); // Dispatch the logOut action to update the auth state.
-          dispatch(apiSlice.util.resetApiState()); // Reset the api state to clear any errors.
+          const { data } = await queryFulfilled;
+          console.log(data);
+          dispatch(logOut());
+          setTimeout(() => {
+            dispatch(apiSlice.util.resetApiState());
+          }, 1000);
         } catch (err) {
-          console.log(err); // Log any errors that occur during the query lifecycle.
+          console.log(err);
         }
       },
     }),

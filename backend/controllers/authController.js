@@ -36,14 +36,14 @@ const login = asyncHandler(async (req, res) => {
       },
     },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "5s" }
+    { expiresIn: "15m" }
   );
 
   // Generate another JWT, which will be used to refresh the access token once it expires. This token contains only the `username` field and expires in 7 days.
   const refreshToken = jwt.sign(
     { username: foundUser.username },
     process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: "5s" }
+    { expiresIn: "7d" }
   );
 
   // Create a secure cookie that contains the refresh token. The cookie is set to be accessible only by the server, over HTTPS, and with a `sameSite` attribute of `None`. The cookie expires after 7 days, which matches the expiry time of the refresh token.
@@ -102,7 +102,7 @@ const refresh = (req, res) => {
           },
         },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: "5s" }
+        { expiresIn: "15m" }
       );
 
       // Send the new access token as a response
